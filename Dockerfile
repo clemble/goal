@@ -5,4 +5,4 @@ EXPOSE 10006
 
 ADD target/goal-management-*-SNAPSHOT.jar /data/goal-management.jar
 
-CMD java -jar -Dspring.profiles.active=cloud -Dserver.port=10006 /data/goal-management.jar
+CMD java -jar -Dspring.profiles.active=cloud -Dserver.port=10006 -Dlogging.config=classpath:logback.cloud.xml /data/goal-management.jar

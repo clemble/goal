@@ -53,7 +53,7 @@ public class GoalLostOutcomeAspect
                 addOperation(new PaymentOperation(PlayerAware.DEFAULT_PLAYER, playerBid.getBet().getAmount(), Operation.Debit));
         }
         // Step 2. Processing payment transaction
-        systemNotificationService.send(new SystemPaymentTransactionRequestEvent(paymentTransaction));
+        systemNotificationService.send(SystemPaymentTransactionRequestEvent.create(paymentTransaction));
     }
 
 }

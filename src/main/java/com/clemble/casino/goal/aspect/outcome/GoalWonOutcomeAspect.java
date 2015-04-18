@@ -56,6 +56,6 @@ public class GoalWonOutcomeAspect
                 addOperation(new PaymentOperation(PlayerAware.DEFAULT_PLAYER, playerBid.getBet().getInterest(), Operation.Credit));
         }
         // Step 3. Checking value
-        systemNotificationService.send(new SystemPaymentTransactionRequestEvent(paymentTransaction));
+        systemNotificationService.send(SystemPaymentTransactionRequestEvent.create(paymentTransaction));
     }
 }

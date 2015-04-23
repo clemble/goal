@@ -8,6 +8,8 @@ import com.clemble.casino.goal.lifecycle.management.event.GoalManagementEvent;
 import com.clemble.casino.goal.service.ReminderService;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +18,8 @@ import java.util.concurrent.TimeUnit;
  * Created by mavarazy on 1/12/15.
  */
 public class SupporterReminderRuleAspect extends GoalAspect<GoalManagementEvent> {
+
+    final private static Logger LOG = LoggerFactory.getLogger(SupporterReminderRuleAspect.class);
 
     final private long hoursToReminder;
     final private BasicReminderRule reminderRule;
@@ -40,15 +44,19 @@ public class SupporterReminderRuleAspect extends GoalAspect<GoalManagementEvent>
             // Step 2.1. Generating remind time
             long remindTime = breachTime - reminderRule.getReminder();
             // Step 2.2. Scheduling reminder
-            event.getBody().getSupporters().forEach((player) ->
-                reminderService.scheduleReminder(
-                    player,
-                    event.getBody().getGoalKey(),
-                    "goal_due",
-                    ImmutableMap.<String, String>of("text", hoursToReminder + " hours to " + goal),
-                    new DateTime(remindTime)
-                )
-            );
+            if (remindTime > System.currentTimeMillis()) {
+                event.getBody().getSupporters().forEach((player) ->
+                                reminderService.scheduleReminder(
+                                        player,
+                                        event.getBody().getGoalKey(),
+                                        "goal_due",
+                                        ImmutableMap.<String, String>of("text", hoursToReminder + " hours to " + goal),
+                                        new DateTime(remindTime)
+                                )
+                );
+            } else {
+                LOG.error("remind time is in the past {} > {}", new DateTime(breachTime), new DateTime(remindTime));
+            }
         }
     }
 

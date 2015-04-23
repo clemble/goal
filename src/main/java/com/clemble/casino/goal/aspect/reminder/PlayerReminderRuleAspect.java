@@ -8,6 +8,8 @@ import com.clemble.casino.goal.lifecycle.management.event.*;
 import com.clemble.casino.goal.service.ReminderService;
 import com.google.common.collect.ImmutableMap;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +17,8 @@ import java.util.concurrent.TimeUnit;
  * Created by mavarazy on 12/10/14.
  */
 public class PlayerReminderRuleAspect extends GoalAspect<GoalManagementEvent> {
+
+    final private Logger LOG = LoggerFactory.getLogger(PlayerReminderRuleAspect.class);
 
     final private long hoursToReminder;
     final private BasicReminderRule reminderRule;
@@ -42,13 +46,17 @@ public class PlayerReminderRuleAspect extends GoalAspect<GoalManagementEvent> {
             // Step 2.1. Generating remind time
             long remindTime = breachTime - reminderRule.getReminder();
             // Step 2.2. Scheduling reminder
-            reminderService.scheduleReminder(
-                event.getBody().getPlayer(),
-                event.getBody().getGoalKey(),
-                "goal_due",
-                ImmutableMap.<String, String>of("text", hoursToReminder + " hours to " + goal),
-                new DateTime(remindTime)
-            );
+            if (remindTime > System.currentTimeMillis()) {
+                reminderService.scheduleReminder(
+                        event.getBody().getPlayer(),
+                        event.getBody().getGoalKey(),
+                        "goal_due",
+                        ImmutableMap.<String, String>of("text", hoursToReminder + " hours to " + goal),
+                        new DateTime(remindTime)
+                );
+            } else {
+                LOG.error("remind time is in the past {} > {}", new DateTime(breachTime), new DateTime(remindTime));
+            }
         }
     }
 

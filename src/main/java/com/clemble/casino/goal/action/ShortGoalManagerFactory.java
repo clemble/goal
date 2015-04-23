@@ -48,7 +48,8 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
         // Step 2. Creating state
         GoalPlayerContext playerContext = new GoalPlayerContext(initiation.getPlayer(), PlayerClock.create(record.getConfiguration()));
         GoalContext goalContext = new GoalContext(parent, Collections.singletonList(playerContext));
-        DateTime deadline = new DateTime(goalConfiguration.getTotalTimeoutRule().getTimeoutCalculator().calculate(initiation.getTimezone(), initiation.getStartDate().getMillis()), DateTimeZone.forID(initiation.getTimezone()));
+        long deadlineTime = goalConfiguration.getTotalTimeoutRule().getTimeoutCalculator().calculate(initiation.getTimezone(), initiation.getStartDate().getMillis(), 0);
+        DateTime deadline = new DateTime(deadlineTime, DateTimeZone.forID(initiation.getTimezone()));
         GoalState state = new GoalState(
             initiation.getGoalKey(),
             initiation.getStartDate(),

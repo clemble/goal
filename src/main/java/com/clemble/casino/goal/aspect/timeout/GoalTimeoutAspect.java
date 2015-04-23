@@ -12,7 +12,6 @@ import com.clemble.casino.server.event.schedule.SystemAddJobScheduleEvent;
 import com.clemble.casino.server.event.schedule.SystemRemoveJobScheduleEvent;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 import static com.clemble.casino.client.event.EventSelectors.not;
 import static com.clemble.casino.client.event.EventSelectors.where;
@@ -45,41 +44,25 @@ public class GoalTimeoutAspect extends GoalAspect<GoalManagementEvent>{
         GoalContext context = event.getBody().getContext();
         // Step 2. Process depending on event
         long deadline = goalState.getDeadline().getMillis();
-        if (event instanceof GoalStartedEvent) {
-            // Case 1. Goal just started
-            context.getPlayerContexts().forEach((c) -> {
-                long startTime = System.currentTimeMillis() + 5_000;
-                long breachTime = moveTimeoutRule.getTimeoutCalculator().calculate(timezone, startTime);
-                BreachPunishment punishment = null;
-                if (breachTime < deadline) {
-                    punishment = moveTimeoutRule.getPunishment();
-                } else {
-                    punishment = totalTimeoutRule.getPunishment();
-                    breachTime = deadline;
-                }
-                c.getClock().start(startTime, breachTime, new DateTime(deadline), punishment);
-                notificationService.send(new SystemAddJobScheduleEvent(goalKey, toKey(c.getPlayer()), new SystemGoalTimeoutEvent(goalKey), new DateTime(breachTime)));
-            });
-        } else if (event instanceof GoalEndedEvent) {
-            // Case 2. Goal ended
+        if (event instanceof GoalEndedEvent) {
+            // Case 1. Goal ended
             context.getPlayerContexts().forEach((c) -> {
                 c.getClock().stop();
                 notificationService.send(new SystemRemoveJobScheduleEvent(goalKey, toKey(c.getPlayer())));
             });
-        } else if (event instanceof GoalChangedStatusEvent || event instanceof GoalChangedStatusUpdateMissedEvent) {
-            // Case 3. Goal changed
+        } else if (event instanceof GoalStartedEvent || event instanceof GoalChangedStatusEvent || event instanceof GoalChangedStatusUpdateMissedEvent) {
+            // Case 2. Goal changed
             context.getPlayerContexts().forEach((c) -> {
                 c.getClock().stop();
                 long startTime = System.currentTimeMillis() + 5_000;
-                long breachTime = moveTimeoutRule.getTimeoutCalculator().calculate(timezone, startTime, c.getClock().getTimeSpent());
-                BreachPunishment punishment = null;
-                if (breachTime < deadline) {
-                    punishment = moveTimeoutRule.getPunishment();
-                } else {
-                    punishment = totalTimeoutRule.getPunishment();
-                    breachTime = deadline;
-                }
-                c.getClock().start(startTime, breachTime, new DateTime(deadline), punishment);
+                long breachTime = moveTimeoutRule.
+                    getTimeoutCalculator().
+                    calculate(timezone, startTime, c.getClock().getTimeSpent());
+                breachTime = Math.min(breachTime, deadline);
+                BreachPunishment punishment = breachTime != deadline
+                    ? moveTimeoutRule.getPunishment()
+                    : totalTimeoutRule.getPunishment();
+                c.getClock().set(startTime, breachTime, new DateTime(deadline), punishment);
                 notificationService.send(new SystemAddJobScheduleEvent(goalKey, toKey(c.getPlayer()), new SystemGoalTimeoutEvent(goalKey), new DateTime(breachTime)));
             });
         }

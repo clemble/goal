@@ -1,6 +1,6 @@
 package com.clemble.casino.goal.spring;
 
-import com.clemble.casino.goal.controller.GoalVictoryServiceController;
+import com.clemble.casino.goal.controller.GoalVictoryController;
 import com.clemble.casino.goal.listener.SystemGoalReachedVictoryEventListener;
 import com.clemble.casino.goal.repository.GoalVictoryRepository;
 import com.clemble.casino.server.player.notification.SystemNotificationServiceListener;
@@ -29,8 +29,8 @@ public class GoalVictorySpringConfiguration implements SpringConfiguration {
     }
 
     @Bean
-    public GoalVictoryServiceController goalVictoryServiceController(GoalVictoryRepository victoryRepository) {
-        return new GoalVictoryServiceController(victoryRepository);
+    public GoalVictoryController goalVictoryServiceController(GoalVictoryRepository victoryRepository) {
+        return new GoalVictoryController(victoryRepository);
     }
 
     @Bean

@@ -14,11 +14,11 @@ import java.util.List;
  * Created by mavarazy on 3/14/15.
  */
 @RestController
-public class GoalVictoryServiceController implements GoalVictoryService {
+public class GoalVictoryController implements GoalVictoryService {
 
     final private GoalVictoryRepository victoryRepository;
 
-    public GoalVictoryServiceController(GoalVictoryRepository victoryRepository) {
+    public GoalVictoryController(GoalVictoryRepository victoryRepository) {
         this.victoryRepository = victoryRepository;
     }
 

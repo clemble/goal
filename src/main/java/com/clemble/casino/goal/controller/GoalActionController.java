@@ -20,14 +20,14 @@ import java.util.List;
  * Created by mavarazy on 10/9/14.
  */
 @RestController
-public class GoalActionServiceController implements GoalActionService {
+public class GoalActionController implements GoalActionService {
 
     final private GoalManagerFactoryFacade factoryFacade;
     final private GoalStateRepository stateRepository;
 
-    public GoalActionServiceController(
-        GoalManagerFactoryFacade factoryFacade,
-        GoalStateRepository stateRepository) {
+    public GoalActionController(
+            GoalManagerFactoryFacade factoryFacade,
+            GoalStateRepository stateRepository) {
         this.factoryFacade = factoryFacade;
         this.stateRepository = stateRepository;
     }

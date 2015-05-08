@@ -15,11 +15,11 @@ import java.util.List;
  * Created by mavarazy on 9/20/14.
  */
 @RestController
-public class GoalRecordServiceController implements GoalRecordService {
+public class GoalRecordController implements GoalRecordService {
 
     final private GoalRecordRepository recordRepository;
 
-    public GoalRecordServiceController(GoalRecordRepository recordRepository) {
+    public GoalRecordController(GoalRecordRepository recordRepository) {
         this.recordRepository = recordRepository;
     }
 

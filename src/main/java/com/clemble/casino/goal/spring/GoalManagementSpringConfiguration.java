@@ -17,8 +17,8 @@ import com.clemble.casino.goal.aspect.reminder.SupporterReminderRuleAspectFactor
 import com.clemble.casino.goal.aspect.security.GoalSecurityAspectFactory;
 import com.clemble.casino.goal.aspect.share.ShareRuleAspectFactory;
 import com.clemble.casino.goal.aspect.timeout.GoalTimeoutAspectFactory;
-import com.clemble.casino.goal.controller.GoalActionServiceController;
-import com.clemble.casino.goal.controller.GoalRecordServiceController;
+import com.clemble.casino.goal.controller.GoalActionController;
+import com.clemble.casino.goal.controller.GoalRecordController;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.configuration.GoalRoleConfiguration;
 import com.clemble.casino.goal.listener.SystemGoalBetOffEventListener;
@@ -65,15 +65,15 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
     }
 
     @Bean
-    public GoalRecordServiceController goalRecordServiceController(GoalRecordRepository recordRepository) {
-        return new GoalRecordServiceController(recordRepository);
+    public GoalRecordController goalRecordServiceController(GoalRecordRepository recordRepository) {
+        return new GoalRecordController(recordRepository);
     }
 
     @Bean
-    public GoalActionServiceController goalActionServiceController(
+    public GoalActionController goalActionServiceController(
         GoalManagerFactoryFacade factoryFacade,
         GoalStateRepository goalStateRepository) {
-        return new GoalActionServiceController(factoryFacade, goalStateRepository);
+        return new GoalActionController(factoryFacade, goalStateRepository);
     }
 
     @Bean

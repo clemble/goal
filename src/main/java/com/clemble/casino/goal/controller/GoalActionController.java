@@ -10,6 +10,7 @@ import com.clemble.casino.lifecycle.management.event.action.Action;
 import com.clemble.casino.lifecycle.management.event.action.PlayerAction;
 import static org.springframework.http.HttpStatus.*;
 
+import com.clemble.casino.server.ExternalController;
 import com.clemble.casino.server.action.ClembleManager;
 import org.springframework.web.bind.annotation.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by mavarazy on 10/9/14.
  */
 @RestController
-public class GoalActionController implements GoalActionService {
+public class GoalActionController implements GoalActionService, ExternalController {
 
     final private GoalManagerFactoryFacade factoryFacade;
     final private GoalStateRepository stateRepository;

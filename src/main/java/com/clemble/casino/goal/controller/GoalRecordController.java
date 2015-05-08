@@ -6,6 +6,7 @@ import com.clemble.casino.goal.lifecycle.record.service.GoalRecordService;
 import com.clemble.casino.goal.repository.GoalRecordRepository;
 import com.clemble.casino.WebMapping;
 import com.clemble.casino.lifecycle.record.RecordState;
+import com.clemble.casino.server.ExternalController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by mavarazy on 9/20/14.
  */
 @RestController
-public class GoalRecordController implements GoalRecordService {
+public class GoalRecordController implements GoalRecordService, ExternalController {
 
     final private GoalRecordRepository recordRepository;
 

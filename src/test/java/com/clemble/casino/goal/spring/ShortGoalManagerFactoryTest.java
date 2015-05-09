@@ -7,7 +7,7 @@ import com.clemble.casino.goal.lifecycle.configuration.GoalRoleConfiguration;
 import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.BasicReminderRule;
 import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.NoReminderRule;
 import com.clemble.casino.goal.lifecycle.configuration.rule.share.ShareRule;
-import com.clemble.casino.goal.lifecycle.initiation.GoalInitiation;
+import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
 import com.clemble.casino.goal.lifecycle.management.event.GoalEndedEvent;
 import com.clemble.casino.goal.repository.GoalRecordRepository;
 import com.clemble.casino.lifecycle.configuration.rule.bet.LimitedBetRule;
@@ -15,11 +15,10 @@ import com.clemble.casino.lifecycle.configuration.rule.breach.LooseBreachPunishm
 import com.clemble.casino.lifecycle.configuration.rule.timeout.MoveTimeoutCalculator;
 import com.clemble.casino.lifecycle.configuration.rule.timeout.TimeoutRule;
 import com.clemble.casino.lifecycle.configuration.rule.timeout.TotalTimeoutCalculator;
-import com.clemble.casino.lifecycle.initiation.InitiationState;
+import com.clemble.casino.lifecycle.construction.ConstructionState;
 import com.clemble.casino.lifecycle.record.EventRecord;
 import com.clemble.casino.money.Currency;
 import com.clemble.casino.money.Money;
-import com.clemble.casino.payment.Bank;
 import com.clemble.test.concurrent.AsyncCompletionUtils;
 import com.clemble.test.concurrent.Check;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -34,7 +33,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -69,17 +67,16 @@ public class ShortGoalManagerFactoryTest {
         // Step 1. Generating goal
         String goalKey = RandomStringUtils.randomAlphabetic(10);
         String player = RandomStringUtils.randomAlphabetic(10);
-        GoalInitiation initiation = new GoalInitiation(
+        GoalConstruction initiation = new GoalConstruction(
             goalKey,
-            InitiationState.initiated,
-            Bank.create(player, configuration.getBet()),
             player,
             "Create goal state",
             "UTC",
             "",
+            DateTime.now(DateTimeZone.UTC),
             configuration,
-            new HashSet<>(),
-            DateTime.now(DateTimeZone.UTC));
+            ConstructionState.constructed
+        );
         // Step 2. Starting initiation
         managerFactory.start(null, initiation);
         // Step 3. Checking there is a state for the game
@@ -92,17 +89,16 @@ public class ShortGoalManagerFactoryTest {
         // Step 1. Generating goal
         final String goalKey = RandomStringUtils.randomAlphabetic(10);
         String player = RandomStringUtils.randomAlphabetic(10);
-        GoalInitiation initiation = new GoalInitiation(
+        GoalConstruction initiation = new GoalConstruction(
             goalKey,
-            InitiationState.initiated,
-            Bank.create(player, configuration.getBet()),
             player,
-            "Create goal state",
             "UTC",
+            "Create goal state",
             "",
+            DateTime.now(DateTimeZone.UTC),
             configuration,
-            new HashSet<>(),
-            DateTime.now(DateTimeZone.UTC));
+            ConstructionState.constructed
+        );
         // Step 2. Starting initiation
         managerFactory.start(null, initiation);
         // Step 3. Checking there is a state for the game

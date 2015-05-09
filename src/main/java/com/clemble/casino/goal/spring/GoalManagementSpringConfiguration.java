@@ -166,10 +166,9 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
 
     @Bean
     public SystemGoalStartedEventListener systemGoalStartedEventListener(
-        @Qualifier("playerNotificationService") ServerNotificationService notificationService,
         SystemNotificationServiceListener notificationServiceListener,
         GoalManagerFactoryFacade goalManagerFactoryFacade) {
-        SystemGoalStartedEventListener eventListener = new SystemGoalStartedEventListener(notificationService, goalManagerFactoryFacade);
+        SystemGoalStartedEventListener eventListener = new SystemGoalStartedEventListener(goalManagerFactoryFacade);
         notificationServiceListener.subscribe(eventListener);
         return eventListener;
     }

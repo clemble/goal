@@ -2,7 +2,7 @@ package com.clemble.casino.goal.action;
 
 import com.clemble.casino.goal.event.GoalEvent;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
-import com.clemble.casino.goal.lifecycle.initiation.GoalInitiation;
+import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
 import com.clemble.casino.goal.lifecycle.management.GoalContext;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.repository.GoalRecordRepository;
@@ -28,7 +28,7 @@ public class GoalManagerFactoryFacade {
         this.shortGoalManagerFactory = new ShortGoalManagerFactory(shortGoalManagerFactory, recordRepository, stateRepository, notificationService);
     }
 
-    public ClembleManager<GoalEvent, ? extends GoalState> start(GoalContext parent, GoalInitiation initiation) {
+    public ClembleManager<GoalEvent, ? extends GoalState> start(GoalContext parent, GoalConstruction initiation) {
         // Step 1. Creating manager
         ClembleManager<GoalEvent, ? extends GoalState> manager = shortGoalManagerFactory.start(initiation, parent);
         // Step 2. Starting manager

@@ -2,7 +2,7 @@ package com.clemble.casino.goal.action;
 
 import com.clemble.casino.goal.event.GoalEvent;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
-import com.clemble.casino.goal.lifecycle.initiation.GoalInitiation;
+import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
 import com.clemble.casino.goal.lifecycle.management.GoalContext;
 import com.clemble.casino.goal.lifecycle.management.GoalPhase;
 import com.clemble.casino.goal.lifecycle.management.GoalPlayerContext;
@@ -18,6 +18,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * Created by mavarazy on 10/9/14.
@@ -41,27 +42,27 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
     }
 
     @Override
-    public ClembleManager<GoalEvent, ? extends GoalState> start(GoalInitiation initiation, GoalContext parent) {
-        GoalConfiguration goalConfiguration = (GoalConfiguration) initiation.getConfiguration();
+    public ClembleManager<GoalEvent, ? extends GoalState> start(GoalConstruction construction, GoalContext parent) {
+        GoalConfiguration goalConfiguration = (GoalConfiguration) construction.getConfiguration();
         // Step 1. Saving record
-        GoalRecord record = recordRepository.save(initiation.toRecord());
+        GoalRecord record = recordRepository.save(construction.toRecord());
         // Step 2. Creating state
-        GoalPlayerContext playerContext = new GoalPlayerContext(initiation.getPlayer(), PlayerClock.create(record.getConfiguration()));
+        GoalPlayerContext playerContext = new GoalPlayerContext(construction.getPlayer(), PlayerClock.create(record.getConfiguration()));
         GoalContext goalContext = new GoalContext(parent, Collections.singletonList(playerContext));
-        long deadlineTime = goalConfiguration.getTotalTimeoutRule().getTimeoutCalculator().calculate(initiation.getTimezone(), initiation.getStartDate().getMillis(), 0);
-        DateTime deadline = new DateTime(deadlineTime, DateTimeZone.forID(initiation.getTimezone()));
+        long deadlineTime = goalConfiguration.getTotalTimeoutRule().getTimeoutCalculator().calculate(construction.getTimezone(), construction.getStartDate().getMillis(), 0);
+        DateTime deadline = new DateTime(deadlineTime, DateTimeZone.forID(construction.getTimezone()));
         GoalState state = new GoalState(
-            initiation.getGoalKey(),
-            initiation.getStartDate(),
+            construction.getGoalKey(),
+            construction.getStartDate(),
             deadline,
-            initiation.getPlayer(),
+            construction.getPlayer(),
             record.getBank(),
-            initiation.getGoal(),
-            initiation.getTimezone(),
-            initiation.getTag(),
-            initiation.getConfiguration(),
+            construction.getGoal(),
+            construction.getTimezone(),
+            construction.getTag(),
+            construction.getConfiguration(),
             goalContext,
-            initiation.getSupporters(),
+            new HashSet<>(),
             "Go for it",
             GoalPhase.started,
             null);

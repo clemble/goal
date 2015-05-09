@@ -1,7 +1,7 @@
 package com.clemble.casino.goal.spring;
 
 import com.clemble.casino.goal.controller.GoalVictoryController;
-import com.clemble.casino.goal.repository.GoalRecordRepository;
+import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.server.spring.common.CommonSpringConfiguration;
 import com.clemble.casino.server.spring.common.SpringConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Import;
 public class GoalVictorySpringConfiguration implements SpringConfiguration {
 
     @Bean
-    public GoalVictoryController goalVictoryServiceController(GoalRecordRepository recordRepository) {
-        return new GoalVictoryController(recordRepository);
+    public GoalVictoryController goalVictoryServiceController(GoalStateRepository stateRepository) {
+        return new GoalVictoryController(stateRepository);
     }
 
 

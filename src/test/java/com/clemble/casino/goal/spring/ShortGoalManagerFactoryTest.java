@@ -9,7 +9,7 @@ import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.NoReminderR
 import com.clemble.casino.goal.lifecycle.configuration.rule.share.ShareRule;
 import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
 import com.clemble.casino.goal.lifecycle.management.event.GoalEndedEvent;
-import com.clemble.casino.goal.repository.GoalRecordRepository;
+import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.lifecycle.configuration.rule.bet.LimitedBetRule;
 import com.clemble.casino.lifecycle.configuration.rule.breach.LooseBreachPunishment;
 import com.clemble.casino.lifecycle.configuration.rule.timeout.MoveTimeoutCalculator;
@@ -48,7 +48,7 @@ public class ShortGoalManagerFactoryTest {
     public GoalManagerFactoryFacade managerFactory;
 
     @Autowired
-    public GoalRecordRepository recordRepository;
+    public GoalStateRepository recordRepository;
 
     final private GoalConfiguration configuration = new GoalConfiguration(
         "basic",

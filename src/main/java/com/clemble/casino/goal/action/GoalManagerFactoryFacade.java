@@ -5,7 +5,6 @@ import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
 import com.clemble.casino.goal.lifecycle.management.GoalContext;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
-import com.clemble.casino.goal.repository.GoalRecordRepository;
 import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.server.action.ClembleManager;
 import com.clemble.casino.server.action.ClembleManagerFactory;
@@ -21,11 +20,10 @@ public class GoalManagerFactoryFacade {
 
     public GoalManagerFactoryFacade(
         ClembleManagerFactory<GoalConfiguration> shortGoalManagerFactory,
-        GoalRecordRepository recordRepository,
         GoalStateRepository stateRepository,
         ServerNotificationService notificationService) {
         this.stateRepository = stateRepository;
-        this.shortGoalManagerFactory = new ShortGoalManagerFactory(shortGoalManagerFactory, recordRepository, stateRepository, notificationService);
+        this.shortGoalManagerFactory = new ShortGoalManagerFactory(shortGoalManagerFactory, stateRepository, notificationService);
     }
 
     public ClembleManager<GoalEvent, ? extends GoalState> start(GoalContext parent, GoalConstruction initiation) {

@@ -7,6 +7,9 @@ import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.lifecycle.management.event.action.Action;
 import com.clemble.casino.lifecycle.management.event.action.bet.BetAction;
+import com.clemble.casino.lifecycle.management.outcome.Outcome;
+import com.clemble.casino.lifecycle.record.EventRecord;
+import com.clemble.casino.lifecycle.record.RecordState;
 import com.clemble.casino.payment.Bank;
 import com.clemble.test.random.ObjectGenerator;
 import org.joda.time.DateTime;
@@ -20,6 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.util.Collections;
+import java.util.TreeSet;
 
 /**
  * Created by mavarazy on 12/14/14.
@@ -49,7 +53,10 @@ public class GoalStateRepositoryTest {
             Collections.<String>singleton(ObjectGenerator.generate(String.class)),
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalPhase.class),
-            new BetAction(1)
+            new BetAction(1),
+            new TreeSet<>(ObjectGenerator.generateList(EventRecord.class)),
+            ObjectGenerator.generate(RecordState.class),
+            ObjectGenerator.generate(Outcome.class)
         );
         // Step 2. Saving short goal state
         stateRepository.save(shortGoalState);

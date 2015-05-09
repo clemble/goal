@@ -22,10 +22,6 @@ public class GoalStatePersistenceAspect extends GoalAspect<GoalManagementEvent> 
 
     @Override
     protected void doEvent(GoalManagementEvent event) {
-        if(event instanceof GoalEndedEvent) {
-            stateRepository.delete(event.getBody().getGoalKey());
-        } else {
-            stateRepository.save(event.getBody());
-        }
+        stateRepository.save(event.getBody());
     }
 }

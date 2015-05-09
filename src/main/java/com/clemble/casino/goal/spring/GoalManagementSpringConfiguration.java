@@ -11,20 +11,17 @@ import com.clemble.casino.goal.aspect.notification.SystemGoalReachedNotification
 import com.clemble.casino.goal.aspect.outcome.GoalLostOutcomeAspectFactory;
 import com.clemble.casino.goal.aspect.outcome.GoalWonOutcomeAspectFactory;
 import com.clemble.casino.goal.aspect.persistence.GoalStatePersistenceAspectFactory;
-import com.clemble.casino.goal.aspect.record.GoalRecordAspectFactory;
 import com.clemble.casino.goal.aspect.reminder.PlayerReminderRuleAspectFactory;
 import com.clemble.casino.goal.aspect.reminder.SupporterReminderRuleAspectFactory;
 import com.clemble.casino.goal.aspect.security.GoalSecurityAspectFactory;
 import com.clemble.casino.goal.aspect.share.ShareRuleAspectFactory;
 import com.clemble.casino.goal.aspect.timeout.GoalTimeoutAspectFactory;
 import com.clemble.casino.goal.controller.GoalActionController;
-import com.clemble.casino.goal.controller.GoalRecordController;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.configuration.GoalRoleConfiguration;
 import com.clemble.casino.goal.listener.SystemGoalBetOffEventListener;
 import com.clemble.casino.goal.listener.SystemGoalStartedEventListener;
 import com.clemble.casino.goal.listener.SystemGoalTimeoutEventListener;
-import com.clemble.casino.goal.repository.GoalRecordRepository;
 import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.goal.service.EmailReminderService;
 import com.clemble.casino.goal.service.PhoneReminderService;
@@ -55,18 +52,8 @@ import org.springframework.data.mongodb.repository.support.MongoRepositoryFactor
 public class GoalManagementSpringConfiguration implements SpringConfiguration {
 
     @Bean
-    public GoalRecordRepository goalRecordRepository(MongoRepositoryFactory repositoryFactory) {
-        return repositoryFactory.getRepository(GoalRecordRepository.class);
-    }
-
-    @Bean
     public GoalStateRepository goalStateRepository(MongoRepositoryFactory repositoryFactory) {
         return repositoryFactory.getRepository(GoalStateRepository.class);
-    }
-
-    @Bean
-    public GoalRecordController goalRecordServiceController(GoalRecordRepository recordRepository) {
-        return new GoalRecordController(recordRepository);
     }
 
     @Bean
@@ -158,10 +145,9 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
     @Bean
     public GoalManagerFactoryFacade goalManagerFactoryFacade(
         @Qualifier("shortGoalManagerFactory") ClembleManagerFactory<GoalConfiguration> shortGoalManagerFactory,
-        GoalRecordRepository recordRepository,
         GoalStateRepository goalStateRepository,
         @Qualifier("playerNotificationService") ServerNotificationService notificationService) {
-        return new GoalManagerFactoryFacade(shortGoalManagerFactory, recordRepository, goalStateRepository, notificationService);
+        return new GoalManagerFactoryFacade(shortGoalManagerFactory, goalStateRepository, notificationService);
     }
 
     @Bean
@@ -189,13 +175,6 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
         SystemGoalBetOffEventListener eventListener = new SystemGoalBetOffEventListener(goalManagerFactoryFacade);
         notificationServiceListener.subscribe(eventListener);
         return eventListener;
-    }
-
-    @Bean
-    public GoalRecordAspectFactory goalRecordAspectFactory(
-        GoalRecordRepository recordRepository,
-        @Qualifier("playerNotificationService") ServerNotificationService notificationService){
-        return new GoalRecordAspectFactory(recordRepository, notificationService);
     }
 
     @Bean

@@ -15,4 +15,5 @@ public interface GoalStateRepository extends MongoRepository<GoalState, String> 
 
     List<GoalState> findByPlayerIn(Set<String> players);
 
+    void delete(String id);
 }

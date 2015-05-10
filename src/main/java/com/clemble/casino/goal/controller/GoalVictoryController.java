@@ -31,14 +31,14 @@ public class GoalVictoryController implements GoalVictoryService, ExternalContro
     @RequestMapping(method = RequestMethod.GET, value = GoalWebMapping.MY_VICTORIES, produces = WebMapping.PRODUCES)
     @ResponseStatus(value = HttpStatus.OK)
     public List<GoalState> listMy(@CookieValue("player") String me) {
-        return stateRepository.findByPlayer(me);
+        return stateRepository.findByPlayerOrderByDeadlineDesc(me);
     }
 
     @Override
     @RequestMapping(method = RequestMethod.GET, value = GoalWebMapping.PLAYER_VICTORIES, produces = WebMapping.PRODUCES)
     @ResponseStatus(value = HttpStatus.OK)
     public List<GoalState> list(@PathVariable("player") String player) {
-        return stateRepository.findByPlayer(player);
+        return stateRepository.findByPlayerOrderByDeadlineDesc(player);
     }
 
 }

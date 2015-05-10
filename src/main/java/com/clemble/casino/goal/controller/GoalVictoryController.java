@@ -5,7 +5,7 @@ import com.clemble.casino.goal.GoalWebMapping;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.service.GoalVictoryService;
 import com.clemble.casino.goal.repository.GoalStateRepository;
-import com.clemble.casino.server.ExternalController;
+import com.clemble.casino.server.ServerController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.List;
  * Created by mavarazy on 3/14/15.
  */
 @RestController
-public class GoalVictoryController implements GoalVictoryService, ExternalController {
+public class GoalVictoryController implements GoalVictoryService, ServerController {
 
     final private GoalStateRepository stateRepository;
 

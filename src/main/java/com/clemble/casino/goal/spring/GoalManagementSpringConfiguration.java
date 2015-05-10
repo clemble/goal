@@ -59,8 +59,14 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
     @Bean
     public GoalActionController goalActionServiceController(
         GoalManagerFactoryFacade factoryFacade,
-        GoalStateRepository goalStateRepository) {
-        return new GoalActionController(factoryFacade, goalStateRepository);
+        GoalStateRepository goalStateRepository,
+        @Qualifier("playerAccountClient") PlayerAccountService accountService,
+        SystemNotificationService notificationService) {
+        return new GoalActionController(
+            factoryFacade,
+            goalStateRepository,
+            accountService,
+            notificationService);
     }
 
     @Bean

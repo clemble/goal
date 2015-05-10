@@ -11,7 +11,6 @@ import com.clemble.casino.goal.lifecycle.management.GoalPlayerContext;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.lifecycle.configuration.rule.time.PlayerClock;
-import com.clemble.casino.lifecycle.record.RecordState;
 import com.clemble.casino.money.Money;
 import com.clemble.casino.payment.Bank;
 import com.clemble.casino.server.action.ClembleManager;
@@ -70,7 +69,6 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
             GoalPhase.started,
             null,
             new TreeSet<>(),
-            RecordState.active,
             null);
         // Step 3. Saving state
         stateRepository.save(state);

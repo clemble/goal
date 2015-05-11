@@ -51,7 +51,6 @@ public class GoalStateRepositoryTest {
             Collections.<String>singleton(ObjectGenerator.generate(String.class)),
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalPhase.class),
-            new BetAction(1),
             new TreeSet<>(ObjectGenerator.generateList(EventRecord.class)),
             ObjectGenerator.generate(Outcome.class),
             new TreeSet<>(ObjectGenerator.generateList(GoalInspiration.class))

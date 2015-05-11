@@ -67,7 +67,6 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
             new HashSet<>(),
             "Go for it",
             GoalPhase.started,
-            null,
             new TreeSet<>(),
             null,
             new TreeSet<>());

@@ -29,7 +29,6 @@ import com.clemble.casino.payment.service.PlayerAccountService;
 import com.clemble.casino.server.action.ClembleManagerFactory;
 import com.clemble.casino.server.player.notification.ServerNotificationService;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
-import com.clemble.casino.server.player.notification.SystemNotificationServiceListener;
 import com.clemble.casino.server.spring.common.*;
 import com.clemble.casino.social.SocialProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -158,28 +157,22 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
 
     @Bean
     public SystemGoalStartedEventListener systemGoalStartedEventListener(
-        SystemNotificationServiceListener notificationServiceListener,
         GoalManagerFactoryFacade goalManagerFactoryFacade) {
         SystemGoalStartedEventListener eventListener = new SystemGoalStartedEventListener(goalManagerFactoryFacade);
-        notificationServiceListener.subscribe(eventListener);
         return eventListener;
     }
 
     @Bean
     public SystemGoalTimeoutEventListener systemGoalTimeoutEventListener(
-        SystemNotificationServiceListener notificationServiceListener,
         GoalManagerFactoryFacade goalManagerFactoryFacade) {
         SystemGoalTimeoutEventListener eventListener = new SystemGoalTimeoutEventListener(goalManagerFactoryFacade);
-        notificationServiceListener.subscribe(eventListener);
         return eventListener;
     }
 
     @Bean
     public SystemGoalBetOffEventListener systemGoalForbidBetEventListener(
-        SystemNotificationServiceListener notificationServiceListener,
         GoalManagerFactoryFacade goalManagerFactoryFacade) {
         SystemGoalBetOffEventListener eventListener = new SystemGoalBetOffEventListener(goalManagerFactoryFacade);
-        notificationServiceListener.subscribe(eventListener);
         return eventListener;
     }
 

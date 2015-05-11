@@ -21,7 +21,7 @@ public class GoalTimeoutAspectFactory implements ShortGoalAspectFactory<GoalMana
 
     @Override
     public ClembleAspect<GoalManagementEvent> construct(GoalConfiguration configuration, GoalState state) {
-        return new GoalTimeoutAspect(configuration.getMoveTimeoutRule(), configuration.getTotalTimeoutRule(), notificationService);
+        return new GoalTimeoutAspect(configuration.getMoveTimeoutRule(), notificationService);
     }
 
     @Override

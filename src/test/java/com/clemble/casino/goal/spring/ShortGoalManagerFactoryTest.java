@@ -12,9 +12,7 @@ import com.clemble.casino.goal.lifecycle.management.event.GoalEndedEvent;
 import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.lifecycle.configuration.rule.bet.LimitedBetRule;
 import com.clemble.casino.lifecycle.configuration.rule.breach.LooseBreachPunishment;
-import com.clemble.casino.lifecycle.configuration.rule.timeout.MoveTimeoutCalculator;
-import com.clemble.casino.lifecycle.configuration.rule.timeout.TimeoutRule;
-import com.clemble.casino.lifecycle.configuration.rule.timeout.TotalTimeoutCalculator;
+import com.clemble.casino.lifecycle.configuration.rule.timeout.*;
 import com.clemble.casino.lifecycle.construction.ConstructionState;
 import com.clemble.casino.lifecycle.record.EventRecord;
 import com.clemble.casino.money.Currency;
@@ -56,8 +54,8 @@ public class ShortGoalManagerFactoryTest {
         new Bet(Money.create(Currency.point, 500), Money.create(Currency.point, 50)),
         new BasicReminderRule(TimeUnit.HOURS.toMillis(4)),
         new BasicReminderRule(TimeUnit.HOURS.toMillis(2)),
-        new TimeoutRule(LooseBreachPunishment.getInstance(), new MoveTimeoutCalculator(TimeUnit.SECONDS.toMillis(1))),
-        new TimeoutRule(LooseBreachPunishment.getInstance(), new TotalTimeoutCalculator(TimeUnit.SECONDS.toMillis(3))),
+        new MoveTimeoutRule(LooseBreachPunishment.getInstance(), new MoveTimeoutCalculatorByLimit(TimeUnit.SECONDS.toMillis(1))),
+        new TotalTimeoutRule(LooseBreachPunishment.getInstance(), new TotalTimeoutCalculatorByLimit(TimeUnit.SECONDS.toMillis(3))),
         new GoalRoleConfiguration(3, LimitedBetRule.create(50, 100), 50, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE),
         ShareRule.EMPTY
     );
@@ -78,7 +76,7 @@ public class ShortGoalManagerFactoryTest {
             ConstructionState.constructed
         );
         // Step 2. Starting initiation
-        managerFactory.start(null, initiation);
+        managerFactory.start(initiation);
         // Step 3. Checking there is a state for the game
         Assert.assertNotEquals(managerFactory.get(goalKey), null);
     }
@@ -100,7 +98,7 @@ public class ShortGoalManagerFactoryTest {
             ConstructionState.constructed
         );
         // Step 2. Starting initiation
-        managerFactory.start(null, initiation);
+        managerFactory.start(initiation);
         // Step 3. Checking there is a state for the game
         Thread.sleep(2000);
         AsyncCompletionUtils.check(new Check() {

@@ -23,7 +23,7 @@ public class SystemGoalStartedEventListener implements SystemEventListener<Syste
         if (managerFactory.get(event.getGoalKey()) != null)
             return;
         // Step 1. Start manager for the goal
-        managerFactory.start(null, event.getConstruction());
+        managerFactory.start(event.getConstruction());
     }
 
     @Override

@@ -1,12 +1,10 @@
 package com.clemble.casino.goal.spring;
 
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
-import com.clemble.casino.goal.lifecycle.management.GoalContext;
 import com.clemble.casino.goal.lifecycle.management.GoalInspiration;
 import com.clemble.casino.goal.lifecycle.management.GoalPhase;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.repository.GoalStateRepository;
-import com.clemble.casino.lifecycle.management.event.action.bet.BetAction;
 import com.clemble.casino.lifecycle.management.outcome.Outcome;
 import com.clemble.casino.lifecycle.record.EventRecord;
 import com.clemble.casino.payment.Bank;
@@ -47,7 +45,6 @@ public class GoalStateRepositoryTest {
             "UTC",
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalConfiguration.class),
-            new GoalContext(null, Collections.emptyList()),
             Collections.<String>singleton(ObjectGenerator.generate(String.class)),
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalPhase.class),

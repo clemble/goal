@@ -3,6 +3,7 @@ package com.clemble.casino.goal.aspect.reminder;
 import com.clemble.casino.client.event.EventTypeSelector;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.BasicReminderRule;
+import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalEndedEvent;
 import com.clemble.casino.goal.lifecycle.management.event.GoalManagementEvent;
 import com.clemble.casino.goal.service.ReminderService;
@@ -11,7 +12,6 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -34,13 +34,14 @@ public class SupporterReminderRuleAspect extends GoalAspect<GoalManagementEvent>
 
     @Override
     protected void doEvent(GoalManagementEvent event) {
+        GoalState state = event.getBody();
         // Step 1. Generating goal
-        String goal = event.getBody().getGoal();
+        String goal = state.getGoal();
         // Step 2. Generating reminder dates
-        long breachTime = event.getBody().getContext().getPlayerContexts().get(0).getClock().getBreachTime();
         if (event instanceof GoalEndedEvent) {
             event.getBody().getSupporters().forEach((player) -> reminderService.cancelReminder(player, event.getBody().getGoalKey()));
         } else {
+            long breachTime = state.getConfiguration().getBreachTime(state).getMillis();
             // Step 2.1. Generating remind time
             long remindTime = breachTime - reminderRule.getReminder();
             // Step 2.2. Scheduling reminder

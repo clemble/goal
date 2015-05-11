@@ -5,7 +5,6 @@ import com.clemble.casino.bet.PlayerBet;
 import com.clemble.casino.goal.event.GoalEvent;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
-import com.clemble.casino.goal.lifecycle.management.GoalContext;
 import com.clemble.casino.goal.lifecycle.management.GoalPhase;
 import com.clemble.casino.goal.lifecycle.management.GoalPlayerContext;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
@@ -20,7 +19,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.TreeSet;
 
@@ -43,16 +41,14 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
     }
 
     @Override
-    public ClembleManager<GoalEvent, ? extends GoalState> start(GoalConstruction construction, GoalContext parent) {
+    public ClembleManager<GoalEvent, ? extends GoalState> start(GoalConstruction construction) {
         GoalConfiguration goalConfiguration = (GoalConfiguration) construction.getConfiguration();
         // Step 1. Saving record
         Bank bank = new Bank(new ArrayList<PlayerBet>(), new Bet(Money.ZERO, Money.ZERO), Money.ZERO);
         bank.add(new PlayerBet(construction.getPlayer(), construction.getConfiguration().getBet()));
         // Step 2. Creating state
         GoalPlayerContext playerContext = new GoalPlayerContext(construction.getPlayer(), PlayerClock.create(construction.getConfiguration()));
-        GoalContext goalContext = new GoalContext(parent, Collections.singletonList(playerContext));
-        long deadlineTime = goalConfiguration.getTotalTimeoutRule().getTimeoutCalculator().calculate(construction.getTimezone(), construction.getStartDate().getMillis(), 0);
-        DateTime deadline = new DateTime(deadlineTime, DateTimeZone.forID(construction.getTimezone()));
+        DateTime deadline = goalConfiguration.getTotalTimeoutRule().getTimeoutCalculator().calculate(construction.getStartDate());
         GoalState state = new GoalState(
             construction.getGoalKey(),
             construction.getStartDate(),
@@ -63,7 +59,6 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
             construction.getTimezone(),
             construction.getTag(),
             construction.getConfiguration(),
-            goalContext,
             new HashSet<>(),
             "Go for it",
             GoalPhase.started,

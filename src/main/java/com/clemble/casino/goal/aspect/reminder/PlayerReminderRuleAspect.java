@@ -4,6 +4,7 @@ import static com.clemble.casino.client.event.EventSelectors.*;
 import com.clemble.casino.client.event.EventTypeSelector;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.BasicReminderRule;
+import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.*;
 import com.clemble.casino.goal.service.ReminderService;
 import com.google.common.collect.ImmutableMap;
@@ -36,10 +37,11 @@ public class PlayerReminderRuleAspect extends GoalAspect<GoalManagementEvent> {
 
     @Override
     protected void doEvent(GoalManagementEvent event) {
+        GoalState state = event.getBody();
         // Step 1. Generating goal
-        String goal = event.getBody().getGoal();
+        String goal = state.getGoal();
         // Step 2. Generating reminder dates
-        long breachTime = event.getBody().getContext().getPlayerContexts().get(0).getClock().getBreachTime();
+        long breachTime = state.getConfiguration().getBreachTime(state).getMillis();
         if (event instanceof GoalEndedEvent) {
             reminderService.cancelReminder(event.getBody().getPlayer(), event.getBody().getGoalKey());
         } else {

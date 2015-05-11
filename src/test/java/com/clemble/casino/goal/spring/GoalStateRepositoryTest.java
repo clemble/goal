@@ -53,7 +53,8 @@ public class GoalStateRepositoryTest {
             ObjectGenerator.generate(GoalPhase.class),
             new TreeSet<>(ObjectGenerator.generateList(EventRecord.class)),
             ObjectGenerator.generate(Outcome.class),
-            new TreeSet<>(ObjectGenerator.generateList(GoalInspiration.class))
+            new TreeSet<>(ObjectGenerator.generateList(GoalInspiration.class)),
+            ObjectGenerator.generate(DateTime.class)
         );
         // Step 2. Saving short goal state
         stateRepository.save(shortGoalState);

@@ -69,7 +69,8 @@ public class ShortGoalManagerFactory implements GoalManagerFactory {
             GoalPhase.started,
             new TreeSet<>(),
             null,
-            new TreeSet<>());
+            new TreeSet<>(),
+            DateTime.now(DateTimeZone.forID(construction.getTimezone())));
         // Step 3. Saving state
         stateRepository.save(state);
         // Step 4. Creating manager factory

@@ -4,6 +4,7 @@ import com.clemble.casino.client.PlayerActionTypeSelector;
 import com.clemble.casino.event.Event;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.lifecycle.management.event.action.PlayerAction;
+import com.clemble.casino.lifecycle.management.event.action.bet.BetAction;
 import com.clemble.casino.lifecycle.management.event.action.bet.BidAction;
 import com.clemble.casino.player.PlayerAware;
 
@@ -29,7 +30,7 @@ public class GoalSecurityAspect extends GoalAspect<PlayerAction<?>> implements P
         // Allow only BidActions from different users
         if (!event.getPlayer().equals(player) && !PlayerAware.DEFAULT_PLAYER.equals(event.getPlayer())) {
             // Case 1. Player is different Player
-            if (!(event.getAction() instanceof BidAction))
+            if (!(event.getAction() instanceof BetAction))
                 throw new IllegalArgumentException();
         }
     }

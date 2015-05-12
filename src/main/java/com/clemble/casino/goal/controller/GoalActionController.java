@@ -110,7 +110,7 @@ public class GoalActionController implements GoalActionService, ServerController
         // Step 3. Sending freeze request
         notificationService.send(SystemPaymentFreezeRequestEvent.create(goalKey, player, Money.INSPIRATION));
         // Step 4. Adding inspiration to state
-        GoalInspiration inspiration = new GoalInspiration(player, inspirationText, DateTime.now(DateTimeZone.forID(state.getTimezone())));
+        GoalInspiration inspiration = new GoalInspiration(player, inspirationText, DateTime.now(state.getTimezone()));
         state.getInspirations().add(inspiration);
         stateRepository.save(state);
         return inspiration;

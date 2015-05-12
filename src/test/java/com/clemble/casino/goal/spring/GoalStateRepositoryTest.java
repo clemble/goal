@@ -10,6 +10,7 @@ import com.clemble.casino.lifecycle.record.EventRecord;
 import com.clemble.casino.payment.Bank;
 import com.clemble.test.random.ObjectGenerator;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,7 @@ public class GoalStateRepositoryTest {
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(Bank.class),
             ObjectGenerator.generate(String.class),
-            "UTC",
+            DateTimeZone.UTC,
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalConfiguration.class),
             Collections.<String>singleton(ObjectGenerator.generate(String.class)),

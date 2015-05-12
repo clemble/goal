@@ -69,7 +69,7 @@ public class ShortGoalManagerFactoryTest {
             goalKey,
             player,
             "Create goal state",
-            "UTC",
+            DateTimeZone.UTC,
             "",
             DateTime.now(DateTimeZone.UTC),
             configuration,
@@ -90,8 +90,8 @@ public class ShortGoalManagerFactoryTest {
         GoalConstruction initiation = new GoalConstruction(
             goalKey,
             player,
-            "UTC",
             "Create goal state",
+            DateTimeZone.UTC,
             "",
             DateTime.now(DateTimeZone.UTC),
             configuration,

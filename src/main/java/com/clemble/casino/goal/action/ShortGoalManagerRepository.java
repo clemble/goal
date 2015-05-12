@@ -59,7 +59,7 @@ public class ShortGoalManagerRepository implements GoalManagerRepository {
             new TreeSet<>(),
             null,
             new TreeSet<>(),
-            DateTime.now(DateTimeZone.forID(construction.getTimezone())));
+            DateTime.now(construction.getTimezone()));
         // Step 3. Saving state
         stateRepository.save(state);
         // Step 4. Creating manager factory

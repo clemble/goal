@@ -37,15 +37,14 @@ public class GoalLostOutcomeAspect
 
 
     @Override
-    protected void doEvent(GoalEndedEvent event) {
-        GoalState state = event.getBody();
+    protected void doEvent(GoalEndedEvent event, GoalState state) {
         Collection<PlayerBet> bets = event.getBody().getBank().getBets();
         // Step 1. Generating payment transaction
         // Account already balanced need to remove pending operation
         PaymentTransaction paymentTransaction = new PaymentTransaction().
             setTransactionKey(event.getBody().getGoalKey()).
             setTransactionDate(DateTime.now()).
-            setSource(GoalPaymentSource.create(event));
+            setSource(GoalPaymentSource.create(state));
         // Step 3. Generating bid transaction
         for(PlayerBet playerBid: bets) {
             paymentTransaction.

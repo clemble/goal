@@ -3,11 +3,13 @@ package com.clemble.casino.goal.aspect;
 import com.clemble.casino.event.Event;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
-import com.clemble.casino.server.aspect.ClembleAspectFactory;
+import org.springframework.core.PriorityOrdered;
 
 /**
  * Created by mavarazy on 10/8/14.
  */
-public interface GoalAspectFactory<T extends Event, S extends GoalState, C extends GoalConfiguration> extends ClembleAspectFactory<T, C, S> {
+public interface GoalAspectFactory<T extends Event> extends PriorityOrdered {
+
+    public GoalAspect<T> construct(GoalConfiguration configuration, GoalState state);
 
 }

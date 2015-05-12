@@ -1,17 +1,17 @@
 package com.clemble.casino.goal.aspect.timeout;
 
-import com.clemble.casino.goal.aspect.ShortGoalAspectFactory;
+import com.clemble.casino.goal.aspect.GoalAspect;
+import com.clemble.casino.goal.aspect.GoalAspectFactory;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalManagementEvent;
-import com.clemble.casino.server.aspect.ClembleAspect;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
 import org.springframework.core.Ordered;
 
 /**
  * Created by mavarazy on 1/5/15.
  */
-public class GoalTimeoutAspectFactory implements ShortGoalAspectFactory<GoalManagementEvent> {
+public class GoalTimeoutAspectFactory implements GoalAspectFactory<GoalManagementEvent> {
 
     final private SystemNotificationService notificationService;
 
@@ -20,7 +20,7 @@ public class GoalTimeoutAspectFactory implements ShortGoalAspectFactory<GoalMana
     }
 
     @Override
-    public ClembleAspect<GoalManagementEvent> construct(GoalConfiguration configuration, GoalState state) {
+    public GoalAspect<GoalManagementEvent> construct(GoalConfiguration configuration, GoalState state) {
         return new GoalTimeoutAspect(configuration.getMoveTimeoutRule(), notificationService);
     }
 

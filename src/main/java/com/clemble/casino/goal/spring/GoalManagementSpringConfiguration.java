@@ -1,8 +1,8 @@
 package com.clemble.casino.goal.spring;
 
+import com.clemble.casino.goal.action.GoalManagerFactory;
 import com.clemble.casino.goal.action.GoalManagerFactoryFacade;
-import com.clemble.casino.goal.aspect.GenericGoalAspectFactory;
-import com.clemble.casino.goal.aspect.ShortGoalAspectFactory;
+import com.clemble.casino.goal.aspect.GoalAspectFactory;
 import com.clemble.casino.goal.aspect.bet.GoalBetPaymentAspectFactory;
 import com.clemble.casino.goal.aspect.bet.GoalBetOffAspectFactory;
 import com.clemble.casino.goal.aspect.bet.GoalBetRuleAspectFactory;
@@ -17,7 +17,6 @@ import com.clemble.casino.goal.aspect.security.GoalSecurityAspectFactory;
 import com.clemble.casino.goal.aspect.share.ShareRuleAspectFactory;
 import com.clemble.casino.goal.aspect.timeout.GoalTimeoutAspectFactory;
 import com.clemble.casino.goal.controller.GoalActionController;
-import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.configuration.GoalRoleConfiguration;
 import com.clemble.casino.goal.listener.SystemGoalBetOffEventListener;
 import com.clemble.casino.goal.listener.SystemGoalStartedEventListener;
@@ -26,7 +25,6 @@ import com.clemble.casino.goal.repository.GoalStateRepository;
 import com.clemble.casino.goal.service.EmailReminderService;
 import com.clemble.casino.goal.service.PhoneReminderService;
 import com.clemble.casino.payment.service.PlayerAccountService;
-import com.clemble.casino.server.action.ClembleManagerFactory;
 import com.clemble.casino.server.player.notification.ServerNotificationService;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
 import com.clemble.casino.server.spring.common.*;
@@ -143,13 +141,13 @@ public class GoalManagementSpringConfiguration implements SpringConfiguration {
     }
 
     @Bean
-    public ClembleManagerFactory<GoalConfiguration> shortGoalManagerFactory() {
-        return new ClembleManagerFactory<>(GenericGoalAspectFactory.class, ShortGoalAspectFactory.class);
+    public GoalManagerFactory shortGoalManagerFactory() {
+        return new GoalManagerFactory(GoalAspectFactory.class);
     }
 
     @Bean
     public GoalManagerFactoryFacade goalManagerFactoryFacade(
-        @Qualifier("shortGoalManagerFactory") ClembleManagerFactory<GoalConfiguration> shortGoalManagerFactory,
+        @Qualifier("shortGoalManagerFactory") GoalManagerFactory shortGoalManagerFactory,
         GoalStateRepository goalStateRepository,
         @Qualifier("playerNotificationService") ServerNotificationService notificationService) {
         return new GoalManagerFactoryFacade(shortGoalManagerFactory, goalStateRepository, notificationService);

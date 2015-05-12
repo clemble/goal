@@ -6,7 +6,7 @@ import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.lifecycle.management.event.action.PlayerAction;
 import com.clemble.casino.lifecycle.management.event.action.bet.BetOffAction;
 import com.clemble.casino.player.PlayerAware;
-import com.clemble.casino.server.action.ClembleManager;
+import com.clemble.casino.goal.action.GoalManager;
 import com.clemble.casino.server.event.goal.SystemGoalBetOffEvent;
 import com.clemble.casino.server.player.notification.SystemEventListener;
 
@@ -24,7 +24,7 @@ public class SystemGoalBetOffEventListener implements SystemEventListener<System
     @Override
     public void onEvent(SystemGoalBetOffEvent event) {
         // Step 1. Fetching related GameManager
-        ClembleManager<GoalEvent, ? extends GoalState> manager = managerFactory.get(event.getGoalKey());
+        GoalManager manager = managerFactory.get(event.getGoalKey());
         // Step 2. Creating bet off action
         PlayerAction betOffAction = new PlayerAction<BetOffAction>(event.getGoalKey(), PlayerAware.DEFAULT_PLAYER, BetOffAction.INSTANCE);
         // Step 3. Processing bet off action

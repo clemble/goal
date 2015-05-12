@@ -1,6 +1,7 @@
 package com.clemble.casino.goal.aspect.reminder;
 
-import com.clemble.casino.goal.aspect.GenericGoalAspectFactory;
+import com.clemble.casino.goal.aspect.GoalAspect;
+import com.clemble.casino.goal.aspect.GoalAspectFactory;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.BasicReminderRule;
 import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.NoReminderRule;
@@ -8,14 +9,13 @@ import com.clemble.casino.goal.lifecycle.configuration.rule.reminder.ReminderRul
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalManagementEvent;
 import com.clemble.casino.goal.service.ReminderService;
-import com.clemble.casino.server.aspect.ClembleAspect;
 
 import java.util.function.Function;
 
 /**
  * Created by mavarazy on 1/12/15.
  */
-public class SupporterReminderRuleAspectFactory  implements GenericGoalAspectFactory<GoalManagementEvent> {
+public class SupporterReminderRuleAspectFactory  implements GoalAspectFactory<GoalManagementEvent> {
 
     final private ReminderService reminderService;
     final private Function<GoalConfiguration, ReminderRule> roleExtractor;
@@ -29,7 +29,7 @@ public class SupporterReminderRuleAspectFactory  implements GenericGoalAspectFac
     }
 
     @Override
-    public ClembleAspect<GoalManagementEvent> construct(GoalConfiguration configuration, GoalState state) {
+    public GoalAspect<GoalManagementEvent> construct(GoalConfiguration configuration, GoalState state) {
         ReminderRule reminderRule = roleExtractor.apply(configuration);
         if (reminderRule == null || reminderRule instanceof NoReminderRule) {
             return null;

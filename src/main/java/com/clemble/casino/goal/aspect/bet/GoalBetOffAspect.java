@@ -30,8 +30,7 @@ public class GoalBetOffAspect extends GoalAspect<GoalManagementEvent> {
     }
 
     @Override
-    protected void doEvent(GoalManagementEvent event) {
-        GoalState state = event.getBody();
+    protected void doEvent(GoalManagementEvent event, GoalState state) {
         String goalKey = state.getGoalKey();
         if (event instanceof GoalStartedEvent) {
             // Step 1. Generating schedule event with bet forbid action

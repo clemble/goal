@@ -3,6 +3,7 @@ package com.clemble.casino.goal.aspect.share;
 import com.clemble.casino.client.event.EventTypeSelector;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.lifecycle.configuration.rule.share.ShareRule;
+import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalManagementEvent;
 import com.clemble.casino.server.event.share.SystemSharePostEvent;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
@@ -23,7 +24,7 @@ public class ShareRuleAspect extends GoalAspect<GoalManagementEvent>{
     }
 
     @Override
-    protected void doEvent(GoalManagementEvent event) {
+    protected void doEvent(GoalManagementEvent event, GoalState state) {
         // Step 1. Generating share post event
         SystemSharePostEvent sharePostEvent = new SystemSharePostEvent(event.getPlayer(), provider, event.toPost());
         // Step 2. Checking share post event

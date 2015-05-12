@@ -1,18 +1,18 @@
 package com.clemble.casino.goal.aspect.bet;
 
-import com.clemble.casino.goal.aspect.GenericGoalAspectFactory;
+import com.clemble.casino.goal.aspect.GoalAspect;
+import com.clemble.casino.goal.aspect.GoalAspectFactory;
 import com.clemble.casino.goal.lifecycle.configuration.GoalConfiguration;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalChangedBetEvent;
 import com.clemble.casino.payment.service.PlayerAccountService;
-import com.clemble.casino.server.aspect.ClembleAspect;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
 import org.springframework.core.Ordered;
 
 /**
  * Created by mavarazy on 1/17/15.
  */
-public class GoalBetPaymentAspectFactory implements GenericGoalAspectFactory<GoalChangedBetEvent> {
+public class GoalBetPaymentAspectFactory implements GoalAspectFactory<GoalChangedBetEvent> {
 
     final private PlayerAccountService accountService;
     final private SystemNotificationService notificationService;
@@ -27,7 +27,7 @@ public class GoalBetPaymentAspectFactory implements GenericGoalAspectFactory<Goa
     }
 
     @Override
-    public ClembleAspect<GoalChangedBetEvent> construct(GoalConfiguration configuration, GoalState state) {
+    public GoalAspect<GoalChangedBetEvent> construct(GoalConfiguration configuration, GoalState state) {
         return ASPECT;
     }
 

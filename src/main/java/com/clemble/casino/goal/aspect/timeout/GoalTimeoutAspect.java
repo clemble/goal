@@ -32,22 +32,21 @@ public class GoalTimeoutAspect extends GoalAspect<GoalManagementEvent>{
     }
 
     @Override
-    protected void doEvent(GoalManagementEvent event) {
+    protected void doEvent(GoalManagementEvent event, GoalState state) {
         // Step 1. Preparing for processing
-        GoalState goalState = event.getBody();
         String goalKey = event.getBody().getGoalKey();
         // Step 2. Process depending on event
         if (event instanceof GoalEndedEvent) {
             // Case 1. Goal ended
-            notificationService.send(new SystemRemoveJobScheduleEvent(goalKey, goalState.getPlayer()));
+            notificationService.send(new SystemRemoveJobScheduleEvent(goalKey, state.getPlayer()));
         } else if (event instanceof GoalStartedEvent || event instanceof GoalChangedStatusEvent || event instanceof GoalChangedStatusUpdateMissedEvent) {
             // Case 2. Goal changed
-            DateTime deadline = goalState.getDeadline();
+            DateTime deadline = state.getDeadline();
             DateTime moveTimeout = moveTimeoutRule.
                 getTimeoutCalculator().
-                calculate(goalState);
+                calculate(state);
             DateTime breachTime = moveTimeout.isAfter(deadline) ? deadline :  moveTimeout;
-            notificationService.send(new SystemAddJobScheduleEvent(goalKey, toKey(goalState.getPlayer()), new SystemGoalTimeoutEvent(goalKey), breachTime));
+            notificationService.send(new SystemAddJobScheduleEvent(goalKey, toKey(state.getPlayer()), new SystemGoalTimeoutEvent(goalKey), breachTime));
         }
     }
 

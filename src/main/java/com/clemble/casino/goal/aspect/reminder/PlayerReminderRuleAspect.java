@@ -36,8 +36,7 @@ public class PlayerReminderRuleAspect extends GoalAspect<GoalManagementEvent> {
     }
 
     @Override
-    protected void doEvent(GoalManagementEvent event) {
-        GoalState state = event.getBody();
+    protected void doEvent(GoalManagementEvent event, GoalState state) {
         // Step 1. Generating goal
         String goal = state.getGoal();
         // Step 2. Generating reminder dates

@@ -39,14 +39,13 @@ public class GoalWonOutcomeAspect
     }
 
     @Override
-    protected void doEvent(GoalEndedEvent event) {
-        GoalState state = event.getBody();
+    protected void doEvent(GoalEndedEvent event, GoalState state) {
         Collection<PlayerBet> bets = event.getBody().getBank().getBets();
         // Step 1. Generating payment transaction
         PaymentTransaction paymentTransaction = new PaymentTransaction()
             .setTransactionKey(event.getBody().getGoalKey())
             .setTransactionDate(DateTime.now(DateTimeZone.UTC))
-            .setSource(GoalPaymentSource.create(event));
+            .setSource(GoalPaymentSource.create(state));
         // Step 2. Processing payment transaction
         for(PlayerBet playerBid: bets) {
             paymentTransaction.

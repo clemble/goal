@@ -8,7 +8,7 @@ import com.clemble.casino.lifecycle.configuration.rule.timeout.TotalTimeoutCalcu
 import com.clemble.casino.lifecycle.configuration.rule.timeout.TotalTimeoutRule;
 import com.clemble.casino.lifecycle.management.event.action.Action;
 import com.clemble.casino.lifecycle.management.event.action.PlayerAction;
-import com.clemble.casino.server.action.ClembleManager;
+import com.clemble.casino.goal.action.GoalManager;
 import com.clemble.casino.server.event.goal.SystemGoalTimeoutEvent;
 import com.clemble.casino.server.player.notification.SystemEventListener;
 import org.joda.time.DateTime;
@@ -27,7 +27,7 @@ public class SystemGoalTimeoutEventListener implements SystemEventListener<Syste
     @Override
     public void onEvent(SystemGoalTimeoutEvent event) {
         // Step 1. Fetching related GameState
-        ClembleManager<GoalEvent, ? extends GoalState> manager = managerFactory.get(event.getGoalKey());
+        GoalManager manager = managerFactory.get(event.getGoalKey());
         // Step 2. Extracting game context
         GoalState state = manager.getState();
         // Step 3. Checking total timeout rule was not breached

@@ -2,6 +2,7 @@ package com.clemble.casino.goal.aspect.notification;
 
 import com.clemble.casino.client.event.EventTypeSelector;
 import com.clemble.casino.goal.aspect.GoalAspect;
+import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalManagementEvent;
 import com.clemble.casino.server.player.notification.ServerNotificationService;
 
@@ -18,7 +19,7 @@ public class GoalPlayerNotificationAspect extends GoalAspect<GoalManagementEvent
     }
 
     @Override
-    protected void doEvent(GoalManagementEvent event) {
+    protected void doEvent(GoalManagementEvent event, GoalState state) {
         notificationService.send(event);
     }
 

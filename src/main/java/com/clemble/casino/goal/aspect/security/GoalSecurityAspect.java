@@ -3,6 +3,7 @@ package com.clemble.casino.goal.aspect.security;
 import com.clemble.casino.client.PlayerActionTypeSelector;
 import com.clemble.casino.event.Event;
 import com.clemble.casino.goal.aspect.GoalAspect;
+import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.lifecycle.management.event.action.PlayerAction;
 import com.clemble.casino.lifecycle.management.event.action.bet.BetAction;
 import com.clemble.casino.lifecycle.management.event.action.bet.BidAction;
@@ -26,7 +27,7 @@ public class GoalSecurityAspect extends GoalAspect<PlayerAction<?>> implements P
     }
 
     @Override
-    protected void doEvent(PlayerAction<?> event) {
+    protected void doEvent(PlayerAction<?> event, GoalState state) {
         // Allow only BidActions from different users
         if (!event.getPlayer().equals(player) && !PlayerAware.DEFAULT_PLAYER.equals(event.getPlayer())) {
             // Case 1. Player is different Player

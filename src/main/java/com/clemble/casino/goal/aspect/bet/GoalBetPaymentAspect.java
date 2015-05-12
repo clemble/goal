@@ -5,6 +5,7 @@ import com.clemble.casino.client.event.EventTypeSelector;
 import com.clemble.casino.error.ClembleCasinoError;
 import com.clemble.casino.error.ClembleCasinoException;
 import com.clemble.casino.goal.aspect.GoalAspect;
+import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalChangedBetEvent;
 import com.clemble.casino.money.Money;
 import com.clemble.casino.money.Operation;
@@ -37,7 +38,7 @@ public class GoalBetPaymentAspect extends GoalAspect<GoalChangedBetEvent> {
     }
 
     @Override
-    protected void doEvent(GoalChangedBetEvent event) {
+    protected void doEvent(GoalChangedBetEvent event, GoalState state) {
         // Step 1. Fetching player bid
         PlayerBet playerBid = event.getBet();
         Money amount = playerBid.getBet().getAmount();

@@ -57,7 +57,7 @@ public class GoalManager
     public GoalEvent process(Event action) {
         // Step 1. Sanity check
         if (action == null)
-            throw ClembleCasinoException.fromError(ClembleCasinoError.GamePlayMoveUndefined);
+            throw ClembleCasinoException.fromError(ClembleCasinoError.GoalActionInvalid);
         // Step 1.1 Add check for ended games check
         // Step 2. Acquiring lock for the session, to exclude parallel processing
         sessionLock.lock();

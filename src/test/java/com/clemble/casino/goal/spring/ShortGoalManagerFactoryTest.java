@@ -81,44 +81,4 @@ public class ShortGoalManagerFactoryTest {
         Assert.assertNotEquals(managerFactory.get(goalKey), null);
     }
 
-    @Test
-    @Ignore // TODO move this test to integration - Schedule is external service currently
-    public void testSimpleTimeout() throws InterruptedException {
-        // Step 1. Generating goal
-        final String goalKey = RandomStringUtils.randomAlphabetic(10);
-        String player = RandomStringUtils.randomAlphabetic(10);
-        GoalConstruction initiation = new GoalConstruction(
-            goalKey,
-            player,
-            "Create goal state",
-            DateTimeZone.UTC,
-            "",
-            DateTime.now(DateTimeZone.UTC),
-            configuration,
-            ConstructionState.constructed
-        );
-        // Step 2. Starting initiation
-        managerFactory.start(initiation);
-        // Step 3. Checking there is a state for the game
-        Thread.sleep(2000);
-        AsyncCompletionUtils.check(new Check() {
-            @Override
-            public boolean check() {
-                Set<EventRecord> events = recordRepository.findOne(goalKey).getEventRecords();
-                for (EventRecord record : events) {
-                    if (record.getEvent() instanceof GoalEndedEvent) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        }, 30_000);
-        AsyncCompletionUtils.check(new Check() {
-            @Override
-            public boolean check() {
-                return managerFactory.get(goalKey) == null;
-            }
-        }, 1_000);
-    }
-
 }

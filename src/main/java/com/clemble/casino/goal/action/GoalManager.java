@@ -29,7 +29,7 @@ public class GoalManager
 
     public GoalManager(GoalState state, Collection<GoalAspect<?>> listenerArray) {
         this.listenerArray = listenerArray;
-        this.state = checkNotNull((GoalState) state);
+        this.state = checkNotNull(state);
     }
 
     public GoalState getState() {

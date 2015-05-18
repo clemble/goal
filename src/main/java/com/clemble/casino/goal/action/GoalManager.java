@@ -1,7 +1,7 @@
 package com.clemble.casino.goal.action;
 
-import com.clemble.casino.error.ClembleCasinoError;
-import com.clemble.casino.error.ClembleCasinoException;
+import com.clemble.casino.error.ClembleErrorCode;
+import com.clemble.casino.error.ClembleException;
 import com.clemble.casino.event.Event;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.event.GoalEvent;
@@ -57,7 +57,7 @@ public class GoalManager
     public GoalEvent process(Event action) {
         // Step 1. Sanity check
         if (action == null)
-            throw ClembleCasinoException.fromError(ClembleCasinoError.GoalActionInvalid);
+            throw ClembleException.fromError(ClembleErrorCode.GoalActionInvalid);
         // Step 1.1 Add check for ended games check
         // Step 2. Acquiring lock for the session, to exclude parallel processing
         sessionLock.lock();

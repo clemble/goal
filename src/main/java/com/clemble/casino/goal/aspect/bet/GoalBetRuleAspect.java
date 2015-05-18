@@ -1,8 +1,8 @@
 package com.clemble.casino.goal.aspect.bet;
 
 import com.clemble.casino.client.PlayerActionTypeSelector;
-import com.clemble.casino.error.ClembleCasinoError;
-import com.clemble.casino.error.ClembleCasinoException;
+import com.clemble.casino.error.ClembleErrorCode;
+import com.clemble.casino.error.ClembleException;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.lifecycle.configuration.rule.bet.BetRule;
@@ -24,6 +24,6 @@ public class GoalBetRuleAspect extends GoalAspect<PlayerAction<BetAction>> {
     @Override
     protected void doEvent(PlayerAction<BetAction> event, GoalState state) {
         if (!betRule.isValid(event.getAction()))
-            throw ClembleCasinoException.fromError(ClembleCasinoError.GoalBidInvalid);
+            throw ClembleException.fromError(ClembleErrorCode.GoalBidInvalid);
     }
 }

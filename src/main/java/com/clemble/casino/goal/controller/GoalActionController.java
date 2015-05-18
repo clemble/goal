@@ -2,8 +2,8 @@ package com.clemble.casino.goal.controller;
 
 import static com.clemble.casino.goal.GoalWebMapping.*;
 
-import com.clemble.casino.error.ClembleCasinoError;
-import com.clemble.casino.error.ClembleCasinoException;
+import com.clemble.casino.error.ClembleErrorCode;
+import com.clemble.casino.error.ClembleException;
 import com.clemble.casino.goal.action.GoalManagerFactoryFacade;
 import com.clemble.casino.goal.event.GoalEvent;
 import com.clemble.casino.goal.lifecycle.management.GoalInspiration;
@@ -17,15 +17,11 @@ import static org.springframework.http.HttpStatus.*;
 
 import com.clemble.casino.money.Currency;
 import com.clemble.casino.money.Money;
-import com.clemble.casino.payment.PaymentTransaction;
-import com.clemble.casino.payment.event.PaymentFreezeEvent;
 import com.clemble.casino.payment.service.PlayerAccountService;
 import com.clemble.casino.server.ServerController;
 import com.clemble.casino.server.event.payment.SystemPaymentFreezeRequestEvent;
-import com.clemble.casino.server.event.payment.SystemPaymentTransactionRequestEvent;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.springframework.web.bind.annotation.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -105,7 +101,7 @@ public class GoalActionController implements GoalActionService, ServerController
             throw new IllegalArgumentException();
         // Step 2. Checking there are sufficient funds for this transaction
         if (!accountService.canAfford(Collections.singleton(player), Currency.inspiration, 1L).isEmpty()) {
-            throw ClembleCasinoException.fromError(ClembleCasinoError.PaymentTransactionInsufficientMoney);
+            throw ClembleException.fromError(ClembleErrorCode.PaymentTransactionInsufficientMoney);
         }
         // Step 3. Sending freeze request
         notificationService.send(SystemPaymentFreezeRequestEvent.create(goalKey, player, Money.INSPIRATION));

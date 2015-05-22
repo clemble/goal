@@ -101,7 +101,7 @@ public class GoalActionController implements GoalActionService, ServerController
             throw new IllegalArgumentException();
         // Step 2. Checking there are sufficient funds for this transaction
         if (!accountService.canAfford(Collections.singleton(player), Currency.inspiration, 1L).isEmpty()) {
-            throw ClembleException.fromError(ClembleErrorCode.PaymentTransactionInsufficientMoney);
+            throw ClembleException.withServerError(ClembleErrorCode.PaymentTransactionInsufficientMoney);
         }
         // Step 3. Sending freeze request
         notificationService.send(SystemPaymentFreezeRequestEvent.create(goalKey, player, Money.INSPIRATION));

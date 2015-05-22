@@ -39,7 +39,7 @@ public class GoalBetPaymentAspect extends GoalAspect<GoalChangedBetEvent> {
         // Step 2. Checking player can afford this bid
         boolean canAfford = accountService.canAfford(Collections.singleton(playerBid.getPlayer()), amount.getCurrency(), amount.getAmount()).isEmpty();
         if (!canAfford)
-            throw ClembleException.fromError(ClembleErrorCode.AccountInsufficientAmount);
+            throw ClembleException.withServerError(ClembleErrorCode.AccountInsufficientAmount);
         // Step 3. Sending freeze request
         SystemEvent freezeRequest = SystemPaymentFreezeRequestEvent.create(event.getBody().getGoalKey(), playerBid.getPlayer(), amount);
         notificationService.send(freezeRequest);

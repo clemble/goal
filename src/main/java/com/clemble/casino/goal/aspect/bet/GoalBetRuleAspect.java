@@ -24,6 +24,6 @@ public class GoalBetRuleAspect extends GoalAspect<PlayerAction<BetAction>> {
     @Override
     protected void doEvent(PlayerAction<BetAction> event, GoalState state) {
         if (!betRule.isValid(event.getAction()))
-            throw ClembleException.fromError(ClembleErrorCode.GoalBidInvalid);
+            throw ClembleException.withServerError(ClembleErrorCode.GoalBidInvalid);
     }
 }

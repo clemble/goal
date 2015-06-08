@@ -10,11 +10,16 @@ import org.springframework.context.annotation.Import;
  * Created by mavarazy on 3/31/15.
  */
 @Configuration
-@Import({ WebBootSpringConfiguration.class, GoalManagementSpringConfiguration.class })
-public class GoalManagementApplication implements ClembleBootApplication {
+@Import({ WebBootSpringConfiguration.class,
+    GoalManagementSpringConfiguration.class,
+    GoalVictorySpringConfiguration.class,
+    GoalConfigurationSpringConfiguration.class,
+    GoalConstructionSpringConfiguration.class
+})
+public class GoalApplication implements ClembleBootApplication {
 
     public static void main(String args[]) {
-        SpringApplication.run(GoalManagementApplication.class, args);
+        SpringApplication.run(GoalApplication.class, args);
     }
 
 }

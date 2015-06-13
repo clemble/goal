@@ -7,6 +7,6 @@ import com.clemble.casino.goal.lifecycle.construction.GoalConstruction;
  */
 public interface GoalManagerRepository {
 
-    public GoalManager start(GoalConstruction construction);
+    GoalManager start(GoalConstruction construction);
 
 }

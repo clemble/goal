@@ -33,7 +33,7 @@ public class GoalManagerFactoryFacade {
     public GoalManager get(String goalKey) {
         GoalState state = stateRepository.findOne(goalKey);
         if (state instanceof GoalState) {
-            return shortGoalManagerFactory.create((GoalState) state);
+            return shortGoalManagerFactory.create(state);
         }
         return null;
     }

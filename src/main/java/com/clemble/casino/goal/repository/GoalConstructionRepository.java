@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface GoalConstructionRepository extends MongoRepository<GoalConstruction, String> {
 
-    public List<GoalConstruction> findByPlayerAndState(String player, ConstructionState state);
+    List<GoalConstruction> findByPlayerAndState(String player, ConstructionState state);
 
 }

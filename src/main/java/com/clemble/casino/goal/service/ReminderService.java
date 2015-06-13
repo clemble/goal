@@ -11,8 +11,8 @@ import java.util.Map;
  */
 public interface ReminderService extends ServerService {
 
-    public void scheduleReminder(String player, String goalKey, String template, Map<String, String> params, DateTime breachTime);
+    void scheduleReminder(String player, String goalKey, String template, Map<String, String> params, DateTime breachTime);
 
-    public void cancelReminder(String player, String goalKey);
+    void cancelReminder(String player, String goalKey);
 
 }

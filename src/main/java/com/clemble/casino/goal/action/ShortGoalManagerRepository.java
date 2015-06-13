@@ -37,7 +37,7 @@ public class ShortGoalManagerRepository implements GoalManagerRepository {
 
     @Override
     public GoalManager start(GoalConstruction construction) {
-        GoalConfiguration goalConfiguration = (GoalConfiguration) construction.getConfiguration();
+        GoalConfiguration goalConfiguration = construction.getConfiguration();
         // Step 1. Saving record
         Bank bank = new Bank(new ArrayList<PlayerBet>(), new Bet(Money.ZERO, Money.ZERO), Money.ZERO);
         bank.add(new PlayerBet(construction.getPlayer(), construction.getConfiguration().getBet()));

@@ -10,6 +10,6 @@ import org.springframework.core.PriorityOrdered;
  */
 public interface GoalAspectFactory<T extends Event> extends PriorityOrdered {
 
-    public GoalAspect<T> construct(GoalConfiguration configuration, GoalState state);
+    GoalAspect<T> construct(GoalConfiguration configuration, GoalState state);
 
 }

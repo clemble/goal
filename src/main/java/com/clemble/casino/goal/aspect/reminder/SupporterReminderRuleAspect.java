@@ -50,7 +50,7 @@ public class SupporterReminderRuleAspect extends GoalAspect<GoalManagementEvent>
                                         player,
                                         event.getBody().getGoalKey(),
                                         "goal_due",
-                                        ImmutableMap.<String, String>of("text", hoursToReminder + " hours to " + goal),
+                                        ImmutableMap.of("text", hoursToReminder + " hours to " + goal),
                                         new DateTime(remindTime)
                                 )
                 );

@@ -46,7 +46,7 @@ public class GoalStateRepositoryTest {
             DateTimeZone.UTC,
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalConfiguration.class),
-            Collections.<String>singleton(ObjectGenerator.generate(String.class)),
+            Collections.singleton(ObjectGenerator.generate(String.class)),
             ObjectGenerator.generate(String.class),
             ObjectGenerator.generate(GoalPhase.class),
             new TreeSet<>(ObjectGenerator.generateList(EventRecord.class)),
@@ -57,7 +57,7 @@ public class GoalStateRepositoryTest {
         // Step 2. Saving short goal state
         stateRepository.save(shortGoalState);
         // Step 3. Checking short goal state, can be fetched
-        GoalState goalState = (GoalState) stateRepository.findByPlayer(shortGoalState.getPlayer()).get(0);
+        GoalState goalState = stateRepository.findByPlayer(shortGoalState.getPlayer()).get(0);
         // Step 4. Check values match
         Assert.assertEquals(goalState, shortGoalState);
     }

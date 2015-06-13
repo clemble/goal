@@ -92,13 +92,13 @@ public class GoalConfigurationSpringConfiguration implements SpringConfiguration
             100,
             50,
             30,
-            ImmutableList.<IntervalGoalRule>of(
-                new IntervalGoalRule(new TotalTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 10)), new TotalTimeoutCalculatorByEOD(2)), 100, 15),
-                new IntervalGoalRule(new TotalTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 20)), new TotalTimeoutCalculatorByEOD(1)), 100, 20),
-                new IntervalGoalRule(new GoalRoleConfiguration(3, LimitedBetRule.create(100, 200), 60, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE), 100, 20),
-                new IntervalGoalRule(new GoalRoleConfiguration(3, LimitedBetRule.create(150, 250), 70, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE), 100, 20),
-                new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.twitter)), 100, 15),
-                new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.facebook)), 100, 20)
+            ImmutableList.of(
+                    new IntervalGoalRule(new TotalTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 10)), new TotalTimeoutCalculatorByEOD(2)), 100, 15),
+                    new IntervalGoalRule(new TotalTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 20)), new TotalTimeoutCalculatorByEOD(1)), 100, 20),
+                    new IntervalGoalRule(new GoalRoleConfiguration(3, LimitedBetRule.create(100, 200), 60, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE), 100, 20),
+                    new IntervalGoalRule(new GoalRoleConfiguration(3, LimitedBetRule.create(150, 250), 70, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE), 100, 20),
+                    new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.twitter)), 100, 15),
+                    new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.facebook)), 100, 20)
             )
         );
 
@@ -163,13 +163,13 @@ public class GoalConfigurationSpringConfiguration implements SpringConfiguration
             100,
             50,
             30,
-            ImmutableList.<IntervalGoalRule>of(
-                new IntervalGoalRule(new MoveTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 10)), new MoveTimeoutCalculatorByLimit(TimeUnit.MINUTES.toMillis(3))), 100, 15),
-                new IntervalGoalRule(new MoveTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 20)), new MoveTimeoutCalculatorByLimit(TimeUnit.MINUTES.toMillis(2))), 100, 20),
-                new IntervalGoalRule(new GoalRoleConfiguration(3, LimitedBetRule.create(200, 250), 50, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE), 100, 20),
-                new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.twitter)), 100, 15),
-                new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.facebook)), 100, 20),
-                new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.vkontakte)), 100, 20)
+            ImmutableList.of(
+                    new IntervalGoalRule(new MoveTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 10)), new MoveTimeoutCalculatorByLimit(TimeUnit.MINUTES.toMillis(3))), 100, 15),
+                    new IntervalGoalRule(new MoveTimeoutRule(new PenaltyBreachPunishment(Money.create(Currency.point, 20)), new MoveTimeoutCalculatorByLimit(TimeUnit.MINUTES.toMillis(2))), 100, 20),
+                    new IntervalGoalRule(new GoalRoleConfiguration(3, LimitedBetRule.create(200, 250), 50, NoReminderRule.INSTANCE, NoReminderRule.INSTANCE), 100, 20),
+                    new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.twitter)), 100, 15),
+                    new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.facebook)), 100, 20),
+                    new IntervalGoalRule(new ShareRule(ImmutableSet.of(SocialProvider.vkontakte)), 100, 20)
             )
         );
 

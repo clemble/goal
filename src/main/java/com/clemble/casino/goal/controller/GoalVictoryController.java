@@ -5,6 +5,7 @@ import com.clemble.casino.goal.GoalWebMapping;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.service.GoalVictoryService;
 import com.clemble.casino.goal.repository.GoalStateRepository;
+import com.clemble.casino.lifecycle.management.outcome.Outcome;
 import com.clemble.casino.server.ServerController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class GoalVictoryController implements GoalVictoryService, ServerControll
 
     @Override
     public List<GoalState> listMy() {
-        throw new IllegalArgumentException();
+        throw new UnsupportedOperationException();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = GoalWebMapping.MY_VICTORIES, produces = WebMapping.PRODUCES)
@@ -35,11 +36,30 @@ public class GoalVictoryController implements GoalVictoryService, ServerControll
     }
 
     @Override
+    public Integer countMy() {
+        throw new UnsupportedOperationException();
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = GoalWebMapping.MY_VICTORIES_COUNT, produces = WebMapping.PRODUCES)
+    @ResponseStatus(value = HttpStatus.OK)
+    public Integer countMy(@CookieValue("player") String my) {
+        return stateRepository.countWithOutcome(my, Outcome.won);
+    }
+
+    @Override
     @RequestMapping(method = RequestMethod.GET, value = GoalWebMapping.PLAYER_VICTORIES, produces = WebMapping.PRODUCES)
     @ResponseStatus(value = HttpStatus.OK)
     public List<GoalState> list(@PathVariable("player") String player) {
         return stateRepository.findByPlayerOrderByDeadlineDesc(player);
     }
+
+    @Override
+    @RequestMapping(method = RequestMethod.GET, value = GoalWebMapping.PLAYER_VICTORIES_COUNT, produces = WebMapping.PRODUCES)
+    @ResponseStatus(value = HttpStatus.OK)
+    public Integer count(@PathVariable("player") String player) {
+        return stateRepository.countWithOutcome(player, Outcome.won);
+    }
+
 
 }
 

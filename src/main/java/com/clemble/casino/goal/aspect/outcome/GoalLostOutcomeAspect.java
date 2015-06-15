@@ -1,7 +1,6 @@
 package com.clemble.casino.goal.aspect.outcome;
 
 import com.clemble.casino.bet.PlayerBet;
-import com.clemble.casino.bet.PlayerBetAware;
 import com.clemble.casino.client.event.EventSelectors;
 import com.clemble.casino.client.event.EventTypeSelector;
 import com.clemble.casino.client.event.OutcomeTypeSelector;
@@ -9,7 +8,7 @@ import com.clemble.casino.goal.GoalPaymentSource;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalEndedEvent;
-import com.clemble.casino.lifecycle.management.outcome.PlayerLostOutcome;
+import com.clemble.casino.lifecycle.management.outcome.Outcome;
 import com.clemble.casino.money.Operation;
 import com.clemble.casino.payment.PaymentOperation;
 import com.clemble.casino.payment.PaymentTransaction;
@@ -31,7 +30,7 @@ public class GoalLostOutcomeAspect
     public GoalLostOutcomeAspect(SystemNotificationService systemNotificationService) {
         super(EventSelectors.
             where(new EventTypeSelector(GoalEndedEvent.class)).
-            and(new OutcomeTypeSelector(PlayerLostOutcome.class)));
+            and(new OutcomeTypeSelector(Outcome.lost)));
         this.systemNotificationService = systemNotificationService;
     }
 

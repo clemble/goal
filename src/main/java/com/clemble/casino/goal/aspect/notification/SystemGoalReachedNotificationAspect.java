@@ -6,7 +6,7 @@ import com.clemble.casino.client.event.OutcomeTypeSelector;
 import com.clemble.casino.goal.aspect.GoalAspect;
 import com.clemble.casino.goal.lifecycle.management.GoalState;
 import com.clemble.casino.goal.lifecycle.management.event.GoalEndedEvent;
-import com.clemble.casino.lifecycle.management.outcome.PlayerWonOutcome;
+import com.clemble.casino.lifecycle.management.outcome.Outcome;
 import com.clemble.casino.server.event.goal.SystemGoalReachedEvent;
 import com.clemble.casino.server.player.notification.SystemNotificationService;
 
@@ -20,7 +20,7 @@ public class SystemGoalReachedNotificationAspect extends GoalAspect<GoalEndedEve
     public SystemGoalReachedNotificationAspect(SystemNotificationService systemNotificationService) {
         super(EventSelectors.
                 where(new EventTypeSelector(GoalEndedEvent.class)).
-                and(new OutcomeTypeSelector(PlayerWonOutcome.class)));
+                and(new OutcomeTypeSelector(Outcome.won)));
         this.notificationService = systemNotificationService;
     }
 

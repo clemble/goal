@@ -3,6 +3,6 @@ MAINTAINER antono@clemble.com
 
 EXPOSE 10006
 
-ADD target/goal-*-SNAPSHOT.jar /data/goal.jar
+ADD ./buildoutput/goal.jar /data/goal.jar
 
 CMD java -jar -Dspring.profiles.active=cloud -Dserver.port=10006 -Dlogging.config=classpath:logback.cloud.xml /data/goal.jar
